@@ -1,0 +1,10 @@
+<script src="/js/dependencies/signupValidate.js"></script>
+<div style="margin:auto; display:table;">
+  <form action="/session/create" method="POST" class="form-signup">
+    <p><%= __('Log in') %></p>
+    <input type="text" class="form-control-invalid" placeholder="Username" name="username" />
+    <input type="password" class="form-control-invalid" placeholder="<%= __('Password') %>" name="password"/>
+    <input type="submit" class="red-item fade-item btn-submit" value="<%= __('Log in') %>">
+    <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+  </form>
+</div>
