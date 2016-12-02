@@ -1,0 +1,59 @@
+<div class="sign-outer small-bg">
+  <div class="sign-inner">
+    <table class="menu">
+      <tr>
+        <td id="sign-in-menu" class="menu-element menu-element-active" onclick="displaySignIn()">
+          <h3>Sign in</h3>
+        </td>
+        <td id="sign-up-menu" class="menu-element" onclick="displaySignUp()">
+          <h3>Sign up</h3>
+        </td>
+      </tr>
+    </table>
+    <div id="sign-up" class="sign-form" style="display: none">
+      <form action="/user/create" method="POST" class="form-signup">
+        <p>Create an account</p>
+        <input type="text" class="form-field light-border" placeholder="Username" name="username" />
+        <input type="password" class="form-field light-border" placeholder="Password" name="password"/>
+        <input type="password" class="form-field light-border" placeholder="Confirm password" name="passwordConfirmation"/>
+        <input type="submit" class="form-submit fade-item color-item" value="Create an account">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      </form>
+    </div>
+    <div id="sign-in" class="sign-form">
+      <form action="/session/create" method="POST" class="form-signup">
+        <p>Sign in</p>
+        <input type="text" class="form-field light-border" placeholder="Username" name="username" />
+        <input type="password" class="form-field light-border" placeholder="Password" name="password"/>
+        <input type="submit" class="form-submit fade-item color-item" value="Sign in">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  displaySignIn = () => {
+    signinMenu = document.getElementById("sign-in-menu");
+    signupMenu = document.getElementById("sign-up-menu");
+    signinDiv = document.getElementById("sign-in");
+    signupDiv = document.getElementById("sign-up");
+
+    signinMenu.className = "menu-element menu-element-active";
+    signupMenu.className = "menu-element";
+    signinDiv.style.display = 'block';
+    signupDiv.style.display = 'none';
+  }
+  displaySignUp = () => {
+    signinMenu = document.getElementById("sign-in-menu");
+    signupMenu = document.getElementById("sign-up-menu");
+    signinDiv = document.getElementById("sign-in");
+    signupDiv = document.getElementById("sign-up");
+
+    signinMenu.className = "menu-element";
+    signupMenu.className = "menu-element menu-element-active";
+    signinDiv.style.display = 'none';
+    signupDiv.style.display = 'block';
+  }
+</script>
