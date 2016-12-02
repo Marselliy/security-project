@@ -33,7 +33,7 @@ module.exports = {
     if (!values.password || values.password != values.passwordConfirmation) {
       return cb('Passwords don\'t match')
     }
-    HashingService.hash(values.password, hashAESKey, hash => {
+    HashingService.hash(values.password, User.hashAESKey, hash => {
       delete values.password;
       delete values.passwordConfirmation;
       values.passwordHash = hash;
