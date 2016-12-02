@@ -1,7 +1,7 @@
 var sha1 = require('sha1');
 var argon2 = require('argon2');
 var AES = require('aes');
-var aeskey = [0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xfffffff8];
+var aeskey = [0x3C73F98E,0x5531C415,0x39CD11A2,0xA6812C85,0x8827F24B,0x8DC72395,0x8C696EA6,0x44AB5CB5];
 const options = {
   timeCost: 4, memoryCost: 13, argon2d: true
 };

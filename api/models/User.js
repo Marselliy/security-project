@@ -21,9 +21,9 @@ module.exports = {
     toJSON: function() {
       var obj = this.toObject();
       delete obj._csrf;
-      delete obj.passwordConfirmation;
-      delete obj.salt;
       delete obj.passwordHash;
+      delete obj.createdAt;
+      delete obj.updatedAt;
       return obj;
     }
   },

@@ -7,13 +7,13 @@ window.onload = () => {
   }
 }
 window.onkeypress = (e) => {
-  mode = document.cookie.indexOf('mode=true') != -1;
   if (e.key == '/') {
+    mode = document.cookie.indexOf('mode=true') != -1;
     document.cookie = document.cookie.replace('mode=' + mode, 'mode=' + !mode);
-  }
-  if (!mode) {
-    document.body.className = 'sombra-mode';
-  } else {
-    document.body.className = 'normal-mode';
+    if (!mode) {
+      document.body.className = 'sombra-mode';
+    } else {
+      document.body.className = 'normal-mode';
+    }
   }
 }

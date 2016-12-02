@@ -9,7 +9,7 @@ module.exports = {
 	index : (req, res, next) => {
 		User.find((err, users) => {
 			if (err) return next(err);
-			return next(users);
+			return next(users.map(user => user.toJSON()));
 		});
 	},
 
