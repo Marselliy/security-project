@@ -15,8 +15,11 @@ module.exports = {
 			if (err) return next(err);
 			if (!user) return next('Something wrong');
 			HashingService.verify(req.param('password'), user.passwordHash, User.hashAESKey, match => {
-				if (match) return next('Match');
-				return next('Not match');
+				if (match) {
+					req.session.authenticated = true;
+					return res.redirect('/message');
+				}
+				return res.redirect('/home');
 			});
 		});
 	}
