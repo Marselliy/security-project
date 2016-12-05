@@ -1,0 +1,79 @@
+<script>
+  appendMessage = (author, message) => {
+    chat = document.getElementsByClassName('chat-inner')[0];
+    chatmessage = document.createElement('div');
+    p = document.createElement('p');
+    p.innerHTML = '<b>' + author + ': </b>' + message;
+    chatmessage.className = 'chat-message';
+    chatmessage.appendChild(p);
+    chat.appendChild(chatmessage);
+  }
+  enterChat = () => {
+    document.getElementsByClassName('sign-inner')[0].style.display = 'none';
+    document.getElementsByClassName('chat-inner')[0].style.display = 'block';
+
+    window.rsa = new RSAKey();
+    window.rsa.generate(512, "10001");
+    window.keys = {};
+    io.socket.get('/key/enter', function (resData, jwRes) {
+      for (var id in resData.keys) {
+        var rsa = new RSAKey();
+        rsa.generate(512, "10001");
+        Object.keys(resData.keys[id].n).map(el => rsa.n[el] = resData.keys[id].n[el]);
+        window.keys[id] = rsa;
+      }
+      io.socket.post('/key/sendrsa', { e : window.rsa.e, n : window.rsa.n }, function (resData, jwRes) {
+        jwRes.statusCode; // => 200
+      });
+    });
+    io.socket.on('addnewkey', data => {
+      var rsa = new RSAKey();
+      rsa.generate(512, "10001");
+      Object.keys(data.key.n).map(el => rsa.n[el] = data.key.n[el]);
+      window.keys[data.id] = rsa;
+    });
+    io.socket.on('removekey', data => {
+      delete window.keys[data.id];
+    });
+    io.socket.on('read', data => {
+      ct = data.message;
+      pt = window.rsa.decrypt(ct);
+      appendMessage(data.author, pt);
+    });
+  }
+
+  write = () => {
+    text = document.getElementsByClassName('chat-text')[0].value;
+    document.getElementsByClassName('chat-text')[0].value = '';
+    appendMessage('Me', text);
+    data = {}
+    for (var id in window.keys) {
+      data[id] = window.keys[id].encrypt(text);
+    }
+    io.socket.post('/key/write', {messages : data}, function (resData, jwRes) {
+      jwRes.statusCode; // => 200
+    });
+  }
+
+  window.onbeforeunload = () => {
+    io.socket.get('/key/leave', function () {
+
+    });
+  }
+</script>
+
+<div class="sign-outer small-bg">
+  <div class="sign-inner">
+    <div class="btn-enter" onclick="enterChat()">
+      <h3>Enter chat</h3>
+    </div>
+  </div>
+  <div class="chat-inner" style="display: none">
+    <div class="chat-write">
+      <input class="chat-text" type="text" />
+      <div class="btn-write" onclick="write()">
+        <p>Write</p>
+      </div>
+    </div>
+  </div>
+</div>

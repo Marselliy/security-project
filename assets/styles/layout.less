@@ -23,7 +23,7 @@ input {
   .small-bg {
     background-image: url('../images/bg_small.jpg');
   }
-  .sign-inner {
+  .sign-inner, .chat-inner {
     background-color: #fff;
   }
   .color-item {
@@ -55,7 +55,7 @@ input {
     background-image: url('../images/bg_small2.jpg');
     //background-color: #000;
   }
-  .sign-inner {
+  .sign-inner, .chat-inner {
     background-color: #000;
   }
   .form-field {
@@ -78,6 +78,11 @@ input {
   .menu-element-active {
     background-color: @sombra-pink;
     color: #000;
+  }
+  .chat-write input {
+    border-color: @sombra-pink;
+    background-color: #000;
+    color: @sombra-pink;
   }
 }
 
@@ -134,7 +139,7 @@ input {
   display: flex;
 }
 
-.sign-outer {
+.sign-outer, .chat-outer {
   border: 3px solid;
   border-radius: 1px;
   display: table;
@@ -146,6 +151,14 @@ input {
   margin: 20px;
   width: 520px;
   height: 320px;
+}
+.chat-inner {
+  border: 3px solid;
+  border-radius: 1px;
+  margin: 20px;
+  width: 520px;
+  height: 700px;
+  position: relative;
 }
 .menu {
   width: 100%;
@@ -174,4 +187,36 @@ input {
 }
 .light-border {
   border: 1px solid;
+}
+.btn-enter {
+  cursor: pointer;
+  height: 90%;
+  text-align:center;
+  display:table;
+  width:100%;
+}
+.btn-enter h3 {
+  display:table-cell;
+  vertical-align:middle
+}
+.chat-message {
+  padding-left: 10px;
+}
+.chat-write {
+  width: 510px;
+  border-top: 2px solid;
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  padding: 5px;
+}
+.chat-write input {
+  width: 460px;
+  border-style: solid;
+}
+.chat-write p {
+  margin: 0px;
+  padding: 5px;
+  padding-left: 10px;
+  cursor: pointer;
 }

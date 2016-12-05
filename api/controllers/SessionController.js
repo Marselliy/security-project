@@ -17,6 +17,7 @@ module.exports = {
 			HashingService.verify(req.param('password'), user.passwordHash, User.hashAESKey, match => {
 				if (match) {
 					req.session.authenticated = true;
+					req.session.userid = user.id;
 					return res.redirect('/message');
 				}
 				return res.redirect('/home');

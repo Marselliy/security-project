@@ -7,9 +7,6 @@
 
 module.exports = {
 	index: (req, res, next) => {
-		Message.find((err, messages) => {
-			if (err) return next('Something wrong with message db');
-			res.view({messages: messages});
-		});
+		res.view();
 	}
 };
