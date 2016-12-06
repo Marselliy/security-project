@@ -1,5 +1,6 @@
 <script>
   appendMessage = (author, message) => {
+    message = filter(message);
     chat = document.getElementsByClassName('chat-inner')[0];
     chatmessage = document.createElement('div');
     p = document.createElement('p');
