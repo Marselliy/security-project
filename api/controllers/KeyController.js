@@ -11,7 +11,10 @@ module.exports = {
 	enter: (req, res, next) => {
 		Session.create({userid: req.session.userid}, (err, session) => {
 			if (err) return next(err);
-			res.ok({keys : keys});
+			require('fs').readdir(__dirname + '/../../assets/images/smiles', (err, files) => {
+				if (err) return next(err);
+				res.ok({smiles : files, keys : keys});
+			});
 		});
 	},
 	sendrsa: (req, res, next) => {

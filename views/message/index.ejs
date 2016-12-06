@@ -1,6 +1,7 @@
 <script>
   appendMessage = (author, message) => {
     message = filter(message);
+    message = addSmiles(message, window.smiles);
     chat = document.getElementsByClassName('chat-inner')[0];
     chatmessage = document.createElement('div');
     p = document.createElement('p');
@@ -25,6 +26,21 @@
       }
       io.socket.post('/key/sendrsa', { e : window.rsa.e, n : window.rsa.n }, function (resData, jwRes) {
         jwRes.statusCode; // => 200
+      });
+
+      smilesContainer = document.getElementsByClassName('chat-smiles')[0];
+      window.smiles = resData.smiles;
+      window.smiles.map(smile => {
+        smileDiv = document.createElement('div');
+        smileDiv.style.cursor = 'pointer';
+        inputText = document.getElementsByClassName('chat-text')[0];
+        smileDiv.onclick = () => {
+          inputText.value += ':' + smile.replace(/\..+/g, '') + ':';
+        }
+        smileImg = document.createElement('img');
+        smileImg.src = '/images/smiles/' + smile;
+        smileDiv.appendChild(smileImg);
+        smilesContainer.appendChild(smileDiv);
       });
     });
     io.socket.on('addnewkey', data => {
@@ -71,9 +87,15 @@
   </div>
   <div class="chat-inner" style="display: none">
     <div class="chat-write">
-      <input class="chat-text" type="text" />
-      <div class="btn-write" onclick="write()">
-        <p>Write</p>
+      <div class="chat-text-outer">
+        <input class="chat-text" type="text" />
+        <div class="btn-write" onclick="write()">
+          <p>Write</p>
+        </div>
+      </div>
+
+      <div class="chat-smiles">
+
       </div>
     </div>
   </div>
